@@ -10,11 +10,13 @@ module Citly
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-
     config.generators do |g|
-      g.orm :active_record, primary_key_type: :uuid
+        g.orm :active_record, primary_key_type: :uuid
     end
-    
+    config.autoload_paths << Rails.root.join('lib')
+    excluded_routes = ->(env) { !env["PATH_INFO"].match(%r{^/api}) }
+    config.middleware.use OliveBranch::Middleware, inflection: "camel"
+    config.active_job.queue_adapter = :sidekiq
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

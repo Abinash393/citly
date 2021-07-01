@@ -1,0 +1,14 @@
+require 'sidekiq-status'
+
+Sidekiq.configure_client do |config|
+  config.redis = { url: ENV['REDIS_URL'], size: 4, network_timeout: 5 }
+end
+
+Sidekiq.configure_server do |config|
+  config.redis = { url: ENV['REDIS_URL'], size: 4, network_timeout: 5 }
+end
+
+Sidekiq.configure_server do |config|
+  Sidekiq::Status.configure_server_middleware config
+  Sidekiq::Status.configure_client_middleware config
+end
