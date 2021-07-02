@@ -9,13 +9,15 @@ class CsvGeneratorJob < ApplicationJob
   end
 
   def perform(*args)
-    links = Links.all
-    # column 
+    links = Link.all
+    csv = []
+    # column
     csv << ["Original URL", "Short URL", "Visitors"]
     links.each do |link|
       csv << [link.original_url, link.short_url, link.counter]
     end
-    csv
+    redis.sadd(uuid, csv)
+    puts "-" * 10, uuid
   end
 
 end

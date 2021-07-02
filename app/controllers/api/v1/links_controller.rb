@@ -20,19 +20,18 @@ class Api::V1::LinksController < ApplicationController
   end
 
   def report
-    bg_job = CsvGeneratorJob.perform_later
-    unless bg_job      
+    uuid = SecureRandom.uuid
+    bg_job = CsvGeneratorJob.perform_later(uuid)
+    unless bg_job    
       return
     end
     render json: { success: true, job_id: bg_job.job_id }
   end
 
   def download
-    csv_string = Sidekiq::Status::status(params[:job_id].to_sym)
-    @filename = "data-#{Time.now.to_date.to_s}.csv"
-    # send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => @filename)
+    filename = "data-#{Time.now.to_date.to_s}.csv"
     render json: { success: true, status: csv_string }
-  end
+  end   
 
   private
 
