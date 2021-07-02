@@ -1,5 +1,5 @@
 Redis.current = Redis.new(
-  url:  Rails.application.credentials[:redis][:REDIS_URL],
-  port: Rails.application.credentials[:redis][:REDIS_PORT],
-  db:   Rails.application.credentials[:redis][:REDIS_DB]
+  url:  Rails.application.credentials[:redis][:url],
+  port: Rails.application.credentials[:redis][:port],
+  db:   Rails.application.credentials[:redis][:db]
 )
