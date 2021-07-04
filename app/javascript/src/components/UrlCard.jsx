@@ -31,11 +31,7 @@ const UrlCard = ({
         </a>
       </div>
       <div className="w-1/2 flex justify-between">
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={`citly-l0.herokuapp.com/s/${shortUrl}`}
-        >
+        <a target="_blank" rel="noreferrer" href={shortUrl}>
                     https://citly-l0.herokuapp.com/s/{shortUrl}
         </a>
         <span className="tet-gray-700 ml-4 mw-1.5 bg-gray-300 p-4 text-center">
